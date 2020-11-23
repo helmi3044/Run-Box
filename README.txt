@@ -5,4 +5,4 @@ Anggota Kelompok:
 2. Aliya Rohmatul Ulfa (192410103018) 
 3. Maulida Izzatun Hasanah (192410103020)
 4. Helmi Saifullah Mansur (192410103044)
-5. Mohammad aldi dwi prasetyo (192410103043)
+5. Mohammad Aldi Dwi Prasetyo (192410103043)
