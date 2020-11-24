@@ -47,32 +47,30 @@ GLint gltWriteTGA(const char *szFileName)
     GLint iViewport[4];
     GLenum lastBuffer;
 
- // Get the viewport dimensions
+
  glGetIntegerv(GL_VIEWPORT, iViewport);
 
-    // How big is the image going to be (targas are tightly packed)
+
  lImageSize = iViewport[2] * 3 * iViewport[3];
 
-    // Allocate block. If this doesn't work, go home
+
     pBits = (GLbyte *)malloc(lImageSize);
     if(pBits == NULL)
         return 0;
 
-    // Read bits from color buffer
+    // membaca bits dari color buffer
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
  glPixelStorei(GL_PACK_ROW_LENGTH, 0);
  glPixelStorei(GL_PACK_SKIP_ROWS, 0);
  glPixelStorei(GL_PACK_SKIP_PIXELS, 0);
 
-    // Get the current read buffer setting and save it. Switch to
-    // the front buffer and do the read operation. Finally, restore
-    // the read buffer state
+
     glGetIntegerv(GL_READ_BUFFER, (GLint *)&lastBuffer);
     glReadBuffer(GL_FRONT);
 
     glReadBuffer(lastBuffer);
 
-    // Initialize the Targa header
+    // Initialize Targa header
     tgaHeader.identsize = 0;
     tgaHeader.colorMapType = 0;
     tgaHeader.imageType = 2;
@@ -86,21 +84,21 @@ GLint gltWriteTGA(const char *szFileName)
     tgaHeader.bits = 24;
     tgaHeader.descriptor = 0;
 
-    // Attempt to open the file
+    // membuka file
     pFile = fopen(szFileName, "wb");
     if(pFile == NULL)
   {
-        free(pBits);    // Free buffer and return error
+        free(pBits);
         return 0;
   }
 
-    // Write the header
+    // membaca header
     fwrite(&tgaHeader, sizeof(TGAHEADER), 1, pFile);
 
-    // Write the image data
+    // membaca image data
     fwrite(pBits, lImageSize, 1, pFile);
 
-    // Free temporary buffer and close the file
+    // buffer dan tutup file
     free(pBits);
     fclose(pFile);
 
@@ -109,12 +107,6 @@ GLint gltWriteTGA(const char *szFileName)
  }
 
 
-////////////////////////////////////////////////////////////////////
-// Allocate memory and load targa bits. Returns pointer to new buffer,
-// height, and width of texture, and the OpenGL format of data.
-// Call free() on buffer when finished!
-// This only works on pretty vanilla targas... 8, 24, or 32 bit color
-// only, no palettes, no RLE encoding.
 GLbyte *gltLoadTGA(const char *szFileName, GLint *iWidth, GLint *iHeight, GLint *iComponents, GLenum *eFormat)
  {
     FILE *pFile;
@@ -129,35 +121,33 @@ GLbyte *gltLoadTGA(const char *szFileName, GLint *iWidth, GLint *iHeight, GLint 
 
     *iComponents = GL_RGB8;
 
-    // Attempt to open the file
+    // open file
     pFile = fopen(szFileName, "rb");
     if(pFile == NULL)
         return NULL;
 
-    // Read in header (binary)
+    // membaca header (binary)
     fread(&tgaHeader, 18/* sizeof(TGAHEADER)*/, 1, pFile);
 
-    // Get width, height, and depth of texture
+    // Get width, height, depth of texture
     *iWidth = tgaHeader.width;
     *iHeight = tgaHeader.height;
     sDepth = tgaHeader.bits / 8;
 
-    // Put some validity checks here. Very simply, I only understand
-    // or care about 8, 24, or 32 bit targa's.
+
     if(tgaHeader.bits != 8 && tgaHeader.bits != 24 && tgaHeader.bits != 32)
         return NULL;
 
     // Calculate size of image buffer
     lImageSize = tgaHeader.width * tgaHeader.height * sDepth;
 
-    // Allocate memory and check for success
+    // mengalokasikan memory dan check for success
     pBits = (GLbyte*)malloc(lImageSize * sizeof(GLbyte));
     if(pBits == NULL)
         return NULL;
 
-    // Read in the bits
-    // Check for read error. This should catch RLE or other
-    // weird formats that I don't want to recognize
+    // membaca bits
+    // cek untuk membaca error
     if(fread(pBits, lImageSize, 1, pFile) != 1)
   {
         free(pBits);
@@ -167,7 +157,7 @@ GLbyte *gltLoadTGA(const char *szFileName, GLint *iWidth, GLint *iHeight, GLint 
     // Set OpenGL format expected
     switch(sDepth)
   {
-        case 3:     // Most likely case
+        case 3:
 
             *iComponents = GL_RGB8;
             break;
@@ -182,15 +172,13 @@ GLbyte *gltLoadTGA(const char *szFileName, GLint *iWidth, GLint *iHeight, GLint 
   };
 
 
-    // Done with File
+
     fclose(pFile);
 
-    // Return pointer to image data
     return pBits;
  }
 
-// For best results, put this in a display list
-// Draw a sphere at the origin
+
 void gltDrawSphere(GLfloat fRadius, GLint iSlices, GLint iStacks)
     {
     GLfloat drho = (GLfloat)(3.141592653589) / (GLfloat) iStacks;
@@ -199,7 +187,7 @@ void gltDrawSphere(GLfloat fRadius, GLint iSlices, GLint iStacks)
  GLfloat dt = 1.0f / (GLfloat) iStacks;
  GLfloat t = 1.0f;
  GLfloat s = 0.0f;
-    GLint i, j;     // Looping variables
+    GLint i, j;     // Looping variabel
 
  for (i = 0; i < iStacks; i++)
   {
@@ -209,12 +197,8 @@ void gltDrawSphere(GLfloat fRadius, GLint iSlices, GLint iStacks)
   GLfloat srhodrho = (GLfloat)(sin(rho + drho));
   GLfloat crhodrho = (GLfloat)(cos(rho + drho));
 
-        // Many sources of OpenGL sphere drawing code uses a triangle fan
-        // for the caps of the sphere. This however introduces texturing
 
 
-
-        // artifacts at the poles on some OpenGL implementations
   glBegin(GL_TRIANGLE_STRIP);
         s = 0.0f;
   for ( j = 0; j <= iSlices; j++)
@@ -245,7 +229,7 @@ void gltDrawSphere(GLfloat fRadius, GLint iSlices, GLint iStacks)
         }
     }
 
-// Rotation amounts
+// Rotasi
 static GLfloat xRot = 0.0f;
 static GLfloat yRot = 0.0f;
 
@@ -262,11 +246,11 @@ void drawball(void)
 /*******************************************************************************************/
 
 
-// Called to draw scene
+// manggil ke draw scene
 void RenderScene(void)
  {
 
- // Clear the window with current clearing color
+ // hapus background
  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
  /********************************************************************************/
  //the ball's move
@@ -275,16 +259,16 @@ void RenderScene(void)
  if(position < -10) {position = -10; v = 0; a=0;}
 
  /********************************************************************************/
- //draw the ball  :)
+ //gambar bola
  glPushMatrix();
  glColor3ub(255, 255, 255);
  glTranslatef(move, position, 0.0f);
- glRotatef(v*3, 0.0f, 1.0f, 1.0f); //the ball rotation
+ glRotatef(v*3, 0.0f, 1.0f, 1.0f); //rotasi bola
  drawball();
  glPopMatrix();
  /************************************************************************************/
 
-  //floor
+//floor
  glPushMatrix();
  glBindTexture(GL_TEXTURE_2D, textureObjects[0]);
  glTranslatef(0.0f,-26.0f, 0.0f);
@@ -297,7 +281,7 @@ void RenderScene(void)
  }
 
 
-// This function does any needed initialization on the rendering
+// Fungsi ini melakukan inisialisasi yang diperlukan pada rendering
 // context.
 void SetupRC()
  {
@@ -320,8 +304,8 @@ void SetupRC()
 
  glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
 
- glFrontFace(GL_CCW);  // Counter clock-wise polygons face out
- glEnable(GL_COLOR_MATERIAL); // give color to surface
+ glFrontFace(GL_CCW);
+ glEnable(GL_COLOR_MATERIAL);
 
  glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
@@ -345,7 +329,7 @@ void SetupRC()
 
         glBindTexture(GL_TEXTURE_2D, textureObjects[i]);
 
-        // Load this texture map
+        // Load texture map
         pBytes = gltLoadTGA(szTextureFiles[i], &iWidth, &iHeight, &iComponents, &eFormat);
         gluBuild2DMipmaps(GL_TEXTURE_2D, iComponents, iWidth, iHeight, eFormat, GL_UNSIGNED_BYTE, pBytes);
         free(pBytes);
