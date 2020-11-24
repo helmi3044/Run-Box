@@ -70,7 +70,7 @@ GLint gltWriteTGA(const char *szFileName)
 
     glReadBuffer(lastBuffer);
 
-    // Initialize Targa header
+    // Inisialisasi Targa header
     tgaHeader.identsize = 0;
     tgaHeader.colorMapType = 0;
     tgaHeader.imageType = 2;
