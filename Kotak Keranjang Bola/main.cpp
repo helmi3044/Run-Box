@@ -55,23 +55,23 @@ void displayMe(void){
     glVertex2f(4 + x_pos, 0);
     glEnd();//akhir
 
-    //membuat garis bom
+    //membuat garis kotak keranjang
     glBegin(GL_LINES);//awal garis
-    glColor3f (1.0,0.0,0.0);//pemberian warna ungu pagar
+    glColor3f (1.0,0.0,0.0);//pemberian warna garis kotak keranjang
     glVertex2f(4 + x_pos, 0);
     glVertex2f(6 + x_pos, 2);
     glEnd();//akhir
 
-    //membuat garis bom
+    //membuat garis kotak keranjang
     glBegin(GL_LINES);//awal garis
-    glColor3f (1.0,0.0,0.0);//pemberian warna ungu pagar
+    glColor3f (1.0,0.0,0.0);//pemberian warna garis kotak keranjang
     glVertex2f(6 + x_pos, 2);
     glVertex2f(6 + x_pos, 6);
     glEnd();//akhir
 
-    //membuat garis bom
+    //membuat garis kotak keranjang
     glBegin(GL_LINES);//awal garis
-    glColor3f (1.0,0.0,0.0);//pemberian warna ungu pagar
+    glColor3f (1.0,0.0,0.0);//pemberian warna garis kotak keranjang
     glVertex2f(6 + x_pos, 6);
     glVertex2f(4 + x_pos, 4);
     glEnd();//akhir
@@ -98,7 +98,7 @@ void displayMe(void){
     glVertex2f(2 + x_pos, 3);
     glVertex2f(3 + x_pos, 2);
     glEnd();//akhir
-	glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 void timer(int) {
