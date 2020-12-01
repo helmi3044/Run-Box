@@ -62,14 +62,17 @@ void displayMe(void){
 // setup keyboard controlling function
 void specialkey(int key, int x, int y){
     switch(key){
-    case GLUT_KEY_LEFT:
-        xr--;
+    case GLUT_KEY_LEFT: //ketika menekan tombol keyboard left
+        xr -= 0.4f ;
         glutPostRedisplay();
-        break;
-    case GLUT_KEY_RIGHT:
-        xr++;
-        glutPostRedisplay();
-        break;
+        if(xr > 0)
+            break;
+    case GLUT_KEY_RIGHT: //ketika menekan tombol keyboard right
+        if(xr > 44.0f)
+            break;
+        else
+            xr += 0.4f;
+            glutPostRedisplay();
     }
 }
 
