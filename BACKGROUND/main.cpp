@@ -2,7 +2,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-void Background(){
+void Latar(){
     //Pesisir
     glBegin(GL_POLYGON);
     glColor3ub(163, 98, 34);
@@ -54,7 +54,9 @@ void Background(){
 	glColor3ub(135,206,250);
 	glVertex2f(50, 20);
     glEnd();
+}
 
+void Burung(){
     //Burung
     glLineWidth(2);
     glBegin(GL_LINE_STRIP);
@@ -134,7 +136,9 @@ void Background(){
     glVertex2f(5.5, 42);
     glVertex2f(6.5, 41);
     glEnd();
+}
 
+void Matahari(){
     //Matahari
     //Matahari Seperempat Lingkaran
     glBegin(GL_POLYGON);
@@ -160,7 +164,9 @@ void Background(){
     glVertex2f(49, 45);
     glVertex2f(50, 44);
     glEnd();
+}
 
+void Pohon(){
     //Pohon Kiri
     //Batang Pohon
     glTranslated(-13,-1,0);
@@ -449,7 +455,9 @@ void Background(){
 	glColor3ub(47, 130, 8);
 	glVertex2f(8, 20);
     glEnd();
+}
 
+void Perahu(){
     //Perahu
     //Badan Perahu
     glBegin(GL_POLYGON);
@@ -483,7 +491,11 @@ void Background(){
 void displayMe(void){
     glClear(GL_COLOR_BUFFER_BIT);
 
-    Background();
+    Latar();
+    Matahari();
+    Perahu();
+    Burung();
+    Pohon();
 
     glutSwapBuffers();
 }
