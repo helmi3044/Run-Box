@@ -1,4 +1,4 @@
-Project Mata Kuliah Grafika Komputer. Membuat game Tangkap Bola
+Project Mata Kuliah Grafika Komputer. Membuat game Tangkap Bola terinspirasi dari game tangkap koin shoope
 
 Anggota Kelompok:
 1. Angga Bagus Prasetyo (192410103010)
