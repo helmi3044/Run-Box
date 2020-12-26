@@ -2,7 +2,7 @@ class Background{
 public :
     void Latar (){
         //Pesisir
-        glBegin(GL_POLYGON); //digunakan untuk membuat poligon yang titik koordinatnya bisa lebih dari 4
+        glBegin(GL_POLYGON);    //digunakan untuk membuat poligon yang titik koordinatnya bisa lebih dari 4
         glColor3ub(163, 98, 34);
         glVertex2f(50, 0);
         glVertex2f(0, 0);
@@ -56,7 +56,7 @@ public :
 
     void Burung(){
         //Burung
-        glLineWidth(2);
+        glLineWidth(2);         // FUNGSI GL_LINE_STRIP
         glBegin(GL_LINE_STRIP); // Jadi kita memasukkan beberapa titik di sini.
         glColor3ub(0,0,0);      // Titik pertama dan kedua akan membentuk suatu garis,
         glVertex2f(3, 41);      // lalu titik kedua dan ketiga membentuk garis berikutnya,
@@ -477,7 +477,7 @@ public :
         glEnd();
 
         //Bendera
-        glBegin(GL_TRIANGLES); //digunakan untuk menggambar dalam bentuk segitiga.
+        glBegin(GL_TRIANGLES);      //digunakan untuk menggambar dalam bentuk segitiga.
         glColor3ub(255,255,255);
         glVertex2f(16.5, 27);
         glColor3ub(255, 197, 158);
